@@ -16,25 +16,28 @@ function lower_sigma0(x) {
 function lower_sigma1(x) {
     return rightRotate(x, 17) ^ rightRotate(x, 19) ^ x >>> 10;
 }
-function maj(x, y, z) {
+function Maj(x, y, z) {
     return (x & y) ^ (x & z) ^ (y & z);
 }
-function ch(x, y, z) {
-    return (x & y) ^ (!x & z);
-}
-function hex2bin(hex) {
-    return (parseInt(hex, 16).toString(2)).padStart(8, '0');
+function Ch(x, y, z) {
+    return (x & y) ^ ((~x) & z);
 }
 
-//conversion function
-// function str2binb(str) {
-//     var bin = Array();
-//     var mask = (1 << chrsz) - 1;
-//     for (var i = 0; i < str.length * chrsz; i += chrsz) {
-//         bin[i >> 5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i % 32);
-//     }
-//     return bin;
-// }
+//addition 
+function addition (x, y) {
+    var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+    var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+    return (msw << 16) | (lsw & 0xFFFF);
+    }
+// conversion function
+function str2binb(str) {
+    var bin = Array();
+    var mask = (1 << chrsz) - 1;
+    for (var i = 0; i < str.length * chrsz; i += chrsz) {
+        bin[i >> 5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i % 32);
+    }
+    return bin;
+}
 function binb2hex(binarray) {
     var hex_tab = hexcase ? '0123456789ABCDEF' : '0123456789abcdef';
     var str = '';
@@ -45,21 +48,8 @@ function binb2hex(binarray) {
     return str;
 }
 
-function hasing(input) {
-    var chrsz = 8;
-    var hexcase = 0;
-    //convert string into binary
-    function str2binb(str) {
-        var bin = Array();
-        var mask = (1 << chrsz) - 1;
-        for (var i = 0; i < str.length * chrsz; i += chrsz) {
-            bin[i >> 5] |= (str.charCodeAt(i / chrsz) & mask) << (24 - i % 32);
-        }
-        return bin;
-    }
-    // var msg = str2binb(input);
-    console.log(str2binb(input));
 
+function hasing(m, l) {
     //constants 
     var K = new Array(
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -74,49 +64,56 @@ function hasing(input) {
     var HASH = new Array(
         0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19);
     var W = new Array(64);
+    var a, b, c, d, e, f, g, h, i, j;
+    var T1, T2;
 
-    // for (let i = 0; i < H.length; i++) {
-    //     var tmp = H[i];
-    //     H[i] = hex2bin(tmp).padStart(32, '0');
-    //     // H[i] = parseInt(H[i], 2);
-    //     H[i] = valueOf(Integer.parseInt(H[i], 2));
-    // }
-    // console.log(H);
+    m[l >> 5] |= 0x80 << (24 - l % 32);
+    m[((l + 64 >> 9) << 4) + 15] = l;
 
+    for ( var i = 0; i<m.length; i+=16 ) {
+        a = HASH[0];
+        b = HASH[1];
+        c = HASH[2];
+        d = HASH[3];
+        e = HASH[4];
+        f = HASH[5];
+        g = HASH[6];
+        h = HASH[7];
+        for (var j = 0; j < 64; j++) {
+            if (j < 16) W[j] = m[j + i];
+            else W[j] = addition(addition(addition(lower_sigma1(W[j - 2]), W[j - 7]), lower_sigma0(W[j - 15])), W[j - 16]);
 
-    //convert input string to binary string of 512 bit
-    for (var i = 0; i < input.length; i++) {
-        msg += input.charCodeAt(i).toString(2).padStart(8, '0') + "";
-    }
+            T1 = addition(addition(addition(addition(h, upper_sigma1(e)), Ch(e, f, g)), K[j]), W[j]);
+            T2 = addition(upper_sigma0(a), Maj(a, b, c));
 
-    //padding upto 448 bit
-    msg += '1';
-    for (var i = msg.length; i < 448; i++)
-        msg += '0';
-
-    //remaining 64 bit for length
-    msg += input.length.toString(2).padStart(64, '0')
-    console.log(msg.length);
-
-    //divide 64 block from 512 bit
-    var j = 0;
-    const M = new Array(16);
-    for (let i = 0; i < 16; i++) {
-        M[i] = msg.substring(i * 32, (i * 32) + 32);
-    }
-    const w = new Array(64);
-    for (let i = 0; i < 64; i++) {
-        if (i < 16) {
-            w[i] = M[i];
-        } else {
-            w[i] = [lower_sigma1(w[i - 2]) + w[i - 7] + lower_sigma0(w[i - 15]) + w[i - 16]] % maxvalue;
+            h = g;
+            g = f;
+            f = e;
+            e = addition(d, T1);
+            d = c;
+            c = b;
+            b = a;
+            a = addition(T1, T2);
         }
+        HASH[0] = addition(a, HASH[0]);
+        HASH[1] = addition(b, HASH[1]);
+        HASH[2] = addition(c, HASH[2]);
+        HASH[3] = addition(d, HASH[3]);
+        HASH[4] = addition(e, HASH[4]);
+        HASH[5] = addition(f, HASH[5]);
+        HASH[6] = addition(g, HASH[6]);
+        HASH[7] = addition(h, HASH[7]);
     }
-    // console.log(w);
-    return output_hash;
+    // console.log(HASH);
+    return HASH;
 }
 
 //initalization
-// var data = document.getElementById('str');
-// var input = data.value;
-var output_hash = hasing('adarsh');
+var data = document.getElementById('str');
+var s = data.value;
+// var s = 'adarsh';
+var chrsz = 8;
+var hexcase = 0;
+var output_hash = binb2hex(hasing(str2binb(s), s.length * chrsz));
+console.log(output_hash);
+document.getElementById('output').innerHTML=output_hash;
