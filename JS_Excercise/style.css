@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.calc td{
+    /* border: 1px solid black; */
+    border-collapse: collapse;
+}
+.btnbg{
+    /* background-color: #c9c9c9; */
+    color: cornflowerblue;
+}

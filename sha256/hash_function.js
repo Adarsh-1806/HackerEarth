@@ -70,6 +70,7 @@ function hasing(m, l) {
     m[l >> 5] |= 0x80 << (24 - l % 32);
     m[((l + 64 >> 9) << 4) + 15] = l;
 
+    //for Each block 512bit (16 words)
     for ( var i = 0; i<m.length; i+=16 ) {
         a = HASH[0];
         b = HASH[1];
