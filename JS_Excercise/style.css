@@ -3,11 +3,17 @@
     margin: 0;
     padding: 0;
 }
-.calc td{
-    /* border: 1px solid black; */
-    border-collapse: collapse;
+.display-container{
+    /* height: 70px; */
 }
-.btnbg{
-    /* background-color: #c9c9c9; */
-    color: cornflowerblue;
+#disp-input{
+    height: 50px;
+    width: 100%;
+    border: none;
+    font-size: 25px;
+    overflow: hidden;
+    padding: 2px;
+}
+.screen,.calc{
+    background-color: rgb(237, 231, 231);
 }
