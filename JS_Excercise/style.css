@@ -5,6 +5,7 @@
 }
 .display-container{
     /* height: 70px; */
+    padding: 5px;
 }
 #disp-input{
     height: 50px;
@@ -12,8 +13,10 @@
     border: none;
     font-size: 25px;
     overflow: hidden;
-    padding: 2px;
 }
-.screen,.calc{
+.calc{
     background-color: rgb(237, 231, 231);
+}
+.screen{
+    background-color: white;
 }

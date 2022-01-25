@@ -35,11 +35,11 @@
                         <td><button class="btn btn-lg">F-E</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg ">MC</button></td>
-                        <td><button class="btn btn-lg ">MR</button></td>
-                        <td><button class="btn btn-lg ">M+</button></td>
-                        <td><button class="btn btn-lg ">M-</button></td>
-                        <td><button class="btn btn-lg ">MS</button></td>
+                        <td><button class="btn btn-lg memory-stack">MC</button></td>
+                        <td><button class="btn btn-lg memory-stack">MR</button></td>
+                        <td><button class="btn btn-lg memory-stack">M+</button></td>
+                        <td><button class="btn btn-lg memory-stack">M-</button></td>
+                        <td><button class="btn btn-lg memory-stack">MS</button></td>
                     </tr>
                     <tr class="py-auto">
                         <!-- remaining to add dropdown-list and image -->
@@ -52,14 +52,14 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <div class="btn-group " role="group" aria-label="Basic example">
-                                        <button type="button" class="btn ">sin</button>
-                                        <button type="button" class="btn ">cos</button>
-                                        <button type="button" class="btn ">tan</button>
+                                        <button type="button" class="btn fun">sin</button>
+                                        <button type="button" class="btn fun">cos</button>
+                                        <button type="button" class="btn fun">tan</button>
                                     </div>
                                     <div class="btn-group " role="group" aria-label="Basic example">
-                                        <button type="button" class="btn ">cot</button>
-                                        <button type="button" class="btn ">sec</button>
-                                        <button type="button" class="btn ">csc</button>
+                                        <button type="button" class="btn fun">cot</button>
+                                        <button type="button" class="btn fun">sec</button>
+                                        <button type="button" class="btn fun">csc</button>
                                     </div>
                                 </ul>
                             </div>
@@ -73,9 +73,9 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <div class="btn-group " role="group" aria-label="Basic example">
-                                        <button type="button" class="btn ">rand</button>
-                                        <button type="button" class="btn ">floor</button>
-                                        <button type="button" class="btn ">ceil</button>
+                                        <button type="button" class="btn fun">rand</button>
+                                        <button type="button" class="btn fun">floor</button>
+                                        <button type="button" class="btn fun">ceil</button>
                                     </div>
                                 </ul>
                             </div>
@@ -83,23 +83,23 @@
                     </tr>
                     <tr class="py-auto">
                         <td><button class="btn btn-lg arithmaticOp">2 <sup>nd</sup></button></td>
-                        <td><button class="btn btn-lg">𝞹</button></td>
-                        <td><button class="btn btn-lg">e</button></td>
+                        <td><button class="btn btn-lg default-val">𝞹</button></td>
+                        <td><button class="btn btn-lg default-val">e</button></td>
                         <td><button class="btn btn-lg all-clear">C</button></td>
                         <td><button class="btn btn-lg backspace">&#9003;</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg arithmaticOp">x <sup>2</sup></button></td>
-                        <td><button class="btn btn-lg arithmaticOp">1/ <sub>x</sub></button></td>
-                        <td><button class="btn btn-lg arithmaticOp">|x|</button></td>
-                        <td><button class="btn btn-lg">exp</button></td>
-                        <td><button class="btn btn-lg">mod</button></td>
+                        <td><button class="btn btn-lg single-value">x <sup>2</sup></button></td>
+                        <td><button class="btn btn-lg single-value">1/ <sub>x</sub></button></td>
+                        <td><button class="btn btn-lg single-value">|x|</button></td>
+                        <td><button class="btn btn-lg arithmaticOp">exp</button></td>
+                        <td><button class="btn btn-lg arithmaticOp">mod</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg arithmaticOp">2√x</button></td>
+                        <td><button class="btn btn-lg single-value">2√x</button></td>
                         <td><button class="btn btn-lg">(</button></td>
                         <td><button class="btn btn-lg">)</button></td>
-                        <td><button class="btn btn-lg">n!</button></td>
+                        <td><button class="btn btn-lg single-value">n!</button></td>
                         <td><button class="btn btn-lg arithmaticOp">÷</button></td>
                     </tr>
                     <tr class="py-auto">
@@ -110,25 +110,25 @@
                         <td><button class="btn btn-lg arithmaticOp">X</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg arithmaticOp">10 <sup>x</sup></button></td>
+                        <td><button class="btn btn-lg single-value">10 <sup>x</sup></button></td>
                         <td><button class="btn btn-lg number-data" >4</button></td>
                         <td><button class="btn btn-lg number-data" >5</button></td>
                         <td><button class="btn btn-lg number-data" >6</button></td>
                         <td><button class="btn btn-lg arithmaticOp">-</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg arithmaticOp">log</button></td>
+                        <td><button class="btn btn-lg single-value">log</button></td>
                         <td><button class="btn btn-lg number-data" >1</button></td>
                         <td><button class="btn btn-lg number-data" >2</button></td>
                         <td><button class="btn btn-lg number-data" >3</button></td>
                         <td><button class="btn btn-lg arithmaticOp">+</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg">ln</button></td>
-                        <td><button class="btn btn-lg">+/ <sub>-</sub></button></td>
+                        <td><button class="btn btn-lg single-value">ln</button></td>
+                        <td><button class="btn btn-lg single-value">+/ <sub>-</sub></button></td>
                         <td><button class="btn btn-lg number-data" >0</button></td>
                         <td><button class="btn btn-lg number-data">.</button></td>
-                        <td><button class="btn btn-lg eqal">=</button></td>
+                        <td><button class="btn btn-lg eqal arithmaticOp">=</button></td>
                     </tr>
                 </table>
             </div>
