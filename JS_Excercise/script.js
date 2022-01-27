@@ -6,9 +6,12 @@ const default_val = document.querySelectorAll('.default-val');
 const memory_btns = document.querySelectorAll('.memory-stack');
 const all_clear = document.querySelector('.all-clear');
 const current_data = document.querySelector('.screen'); 
+const exp_data = document.querySelector('.expn'); 
 const backspace = document.querySelector('.backspace'); 
+const deg_rad = document.querySelector('.deg-rad'); 
 const previous_data='';
 const memory_data = '';
+var dr_flag = true;     
 
 class Calculator{
     constructor(current_data){
@@ -24,6 +27,8 @@ class Calculator{
         this.updateDisplay();
     }
     delete(){
+        // console.log(this.current_data);
+        this.current_data = this.current_data.toString();
         this.current_data = this.current_data.substring(0,this.current_data.length-1);
         this.updateDisplay();
     }
@@ -42,14 +47,20 @@ class Calculator{
             this.current_data = Math.log(this.current_data);
         }else if(operation.includes('log')){
             this.current_data = Math.log10(this.current_data);
-        }else if(operation.includes('10')){
+        }else if(operation.includes('10 x')){
             this.current_data = Math.pow(10,this.current_data);
+        }else if(operation.includes('2 x')){
+            this.current_data = Math.pow(2,this.current_data);
         }else if(operation.includes('|x|')){
             if(this.current_data <0)    this.current_data *= (-1);
         }else if(operation.includes('2√x')){
             this.current_data = Math.sqrt(this.current_data);
-        }else if(operation.includes('x') && operation.includes('2')){
+        }else if(operation.includes('3√x')){
+            this.current_data = Math.pow(this.current_data,1/3);
+        }else if(operation.includes('x 2') ){
             this.current_data = this.current_data*this.current_data;
+        }else if(operation.includes('x 3') ){
+            this.current_data = this.current_data*this.current_data*this.current_data;
         }else if(operation.includes('1/')){
             this.current_data =1/this.current_data;
         }else if(operation.includes('n!')){
@@ -96,6 +107,9 @@ class Calculator{
             case 'x y': 
                 answer = Math.pow(this.previous_data,this.current_data);
                 break;
+            case 'y√x': 
+                answer = Math.pow(this.previous_data,1/this.current_data);
+                break;
             default:
                 break;
         }
@@ -127,6 +141,11 @@ class Calculator{
     }
     perform_fun(fun){
         let answer;
+        let cur_formate = document.getElementById('DR').innerText;
+        // console.log(cur_formate);
+        if(cur_formate === 'DEG'){
+            this.current_data = this.current_data*(Math.PI)/180;
+        }
         switch (fun) {
             case 'sin':
                 answer = Math.sin(this.current_data);
@@ -205,6 +224,10 @@ class Calculator{
         }
         this.updateDisplay();
     }
+    exp_function(){
+        this.current_data = Math.pow(Math.E,this.current_data);
+        this.updateDisplay();
+    }
 
 }
 
@@ -233,6 +256,22 @@ backspace.addEventListener('click',()=>{
     calc.delete();
     console.log('Backspace button pressed!!');
 })
+
+exp_data.addEventListener('click',()=>{
+    calc.exp_function();
+    console.log('EXP button pressed!!');
+})
+
+deg_rad.addEventListener('click',()=>{
+    if(dr_flag){
+        dr_flag = false;
+        document.getElementById('DR').innerText="RAD";
+    }else{
+        dr_flag = true;
+        document.getElementById('DR').innerText="DEG";
+    }
+    console.log('Degree Radian button pressed!!');
+})
 default_val.forEach(button => {
     button.addEventListener('click',()=>{
     calc.default_val_fun(button.innerText);
@@ -249,6 +288,7 @@ arithmaticOp.forEach(button => {
 
 single_value.forEach(button => {
     button.addEventListener('click',()=>{
+        console.log(button.innerText);
     calc.single_value_function(button.innerText);
     console.log('single_value button pressed!!');
     })
@@ -267,3 +307,5 @@ fun_btn.forEach(button => {
     console.log('single_value button pressed!!');
     })
 });
+
+//for hide and show

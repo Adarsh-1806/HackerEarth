@@ -31,7 +31,7 @@
                         </td>
                     </tr>
                     <tr class="py-auto btnbg">
-                        <td><button class="btn btn-lg ">DEG</button></td>
+                        <td><button class="btn btn-lg deg-rad" id="DR">DEG</button></td>
                         <td><button class="btn btn-lg">F-E</button></td>
                     </tr>
                     <tr class="py-auto">
@@ -82,42 +82,48 @@
                         </td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg arithmaticOp">2 <sup>nd</sup></button></td>
+                        <td><button class="btn btn-lg " onclick="show_hide()" id="ref-btn">2 <sup>nd</sup></button></td>
                         <td><button class="btn btn-lg default-val">𝞹</button></td>
                         <td><button class="btn btn-lg default-val">e</button></td>
                         <td><button class="btn btn-lg all-clear">C</button></td>
                         <td><button class="btn btn-lg backspace">&#9003;</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg single-value">x <sup>2</sup></button></td>
+                        <td>
+                            <button class="btn btn-lg single-value" id="sqr-cube">x <sup>2</sup></button>
+                            <!-- <button class="btn btn-lg single-value ">x <sup>3</sup></button> -->
+                        </td>
                         <td><button class="btn btn-lg single-value">1/ <sub>x</sub></button></td>
                         <td><button class="btn btn-lg single-value">|x|</button></td>
-                        <td><button class="btn btn-lg arithmaticOp">exp</button></td>
+                        <td><button class="btn btn-lg expn">exp</button></td>
                         <td><button class="btn btn-lg arithmaticOp">mod</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg single-value">2√x</button></td>
+                        <td>
+                            <button class="btn btn-lg single-value l1" id="root">2√x</button>
+                            <!-- <button class="btn btn-lg single-value l2">3√x</button> -->
+                        </td>
                         <td><button class="btn btn-lg">(</button></td>
                         <td><button class="btn btn-lg">)</button></td>
                         <td><button class="btn btn-lg single-value">n!</button></td>
                         <td><button class="btn btn-lg arithmaticOp">÷</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg arithmaticOp">x <sup>y</sup></button></td>
+                        <td><button class="btn btn-lg arithmaticOp" id="nth-root">x <sup>y</sup></button></td>
                         <td><button class="btn btn-lg number-data" >7</button></td>
                         <td><button class="btn btn-lg number-data" >8</button></td>
                         <td><button class="btn btn-lg number-data" >9</button></td>
                         <td><button class="btn btn-lg arithmaticOp">X</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg single-value">10 <sup>x</sup></button></td>
+                        <td><button class="btn btn-lg single-value" id="power">10 <sup>x</sup></button></td>
                         <td><button class="btn btn-lg number-data" >4</button></td>
                         <td><button class="btn btn-lg number-data" >5</button></td>
                         <td><button class="btn btn-lg number-data" >6</button></td>
                         <td><button class="btn btn-lg arithmaticOp">-</button></td>
                     </tr>
                     <tr class="py-auto">
-                        <td><button class="btn btn-lg single-value">log</button></td>
+                        <td><button class="btn btn-lg single-value" id="logarithm">log</button></td>
                         <td><button class="btn btn-lg number-data" >1</button></td>
                         <td><button class="btn btn-lg number-data" >2</button></td>
                         <td><button class="btn btn-lg number-data" >3</button></td>
@@ -135,9 +141,26 @@
             <!-- </div> -->
         </div>
     </div>
-    <!-- <script> 
-       
-    </script> -->
+    <script> 
+    var flag = true;
+    function show_hide(){
+        if(flag){
+            document.getElementById('sqr-cube').innerHTML="x <sup>3</sup>";
+            document.getElementById('root').innerHTML="3√x";
+            document.getElementById('nth-root').innerHTML="<sup>y</sup>√x";
+            document.getElementById('power').innerHTML="2 <sup>x</sup>";
+            // document.getElementById('logarithm').innerHTML="log<sub>x</sub>y";
+            flag=false;
+        }else{
+            document.getElementById('sqr-cube').innerHTML="x <sup>2</sup>";
+            document.getElementById('root').innerHTML="2√x";
+            document.getElementById('nth-root').innerHTML="x <sup>y</sup>";
+            document.getElementById('power').innerHTML="10 <sup>x</sup>";
+            // document.getElementById('logarithm').innerHTML="log";
+            flag=true;
+        }
+    }
+    </script>
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
