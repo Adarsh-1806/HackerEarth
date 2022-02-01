@@ -13,7 +13,7 @@ class block{
         this.merkleroot = getMerkleroot(data);
     }
     calculate_hash(){
-        return gethash(this.nounce+' '+this.block_number +' '+ this.timestamp +' '+ JSON.stringify(this.data) +' '+ this.pre_hash);
+        return gethash(this.nounce+' '+this.block_number +' '+ this.timestamp +' '+ this.merkleroot +' '+ this.pre_hash);
     }
     proof_of_work(){
         while(this.hash.substring(0,3) != '000'){
@@ -55,7 +55,7 @@ class Blockchain{
             const pre_node = this.blockchain[i-1];
             const cur_node = this.blockchain[i];
             // console.log(cur_node.data);
-            if(cur_node.hash !== cur_node.calculate_hash() || cur_node.pre_hash !== pre_node.hash || pre_node.next_hash !== cur_node.hash){
+            if(cur_node.hash !== cur_node.calculate_hash() ||cur_node.merkleroot !== getMerkleroot(cur_node.data) || cur_node.pre_hash !== pre_node.hash || pre_node.next_hash !== cur_node.hash){
                 return [false,i];
             }
         }
@@ -92,10 +92,11 @@ b1.addBlock(new block(5,[{from:'Nayan',to:'Vivek',amount:355}]));
 
 // console.log(JSON.stringify(b1,null,4));
 
-// b1.blockchain[3].data = {from:'Arjun'};
 // b1.blockchain[3].hash = b1.blockchain[3].calculate_hash();
 // setInterval(function () {
-//     console.log(b1.valid_chain());
+    console.log(b1.valid_chain());
+    b1.blockchain[2].data[2] = {from:'Pratik',to:'Bhautik',amount:50};
+    console.log(b1.valid_chain());
 // },5000);
 // console.log(JSON.stringify(b1,null,4));
 
