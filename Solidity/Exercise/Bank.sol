@@ -3,37 +3,33 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 contract Bank{
-    address private owner;
-    uint public totalBalance;
-    mapping (address=>uint) accHolders;
 
-    constructor(){
-        owner = msg.sender;
-    }
+    uint public totalBalance;
+    mapping (address=>uint) accounts;
 
     error NotEnoughFunds(uint requisted, uint available);
 
     //Function to Transfer Ether For account => this contract
-    function DepositEther() public payable{
-        accHolders[msg.sender] += msg.value;
+    function depositEther() public payable{
+        accounts[msg.sender] += msg.value;
         totalBalance += msg.value;
     }
 
     //Function to Transfer Ether For this Contract => account
-    function WithdrawEther(uint _amount) public payable{
+    function WithdrawEther(uint _amount) public{
         uint money = _amount*(10**15);
-        if(accHolders[msg.sender] < money){
-            revert NotEnoughFunds(money, accHolders[msg.sender]);
+        if(accounts[msg.sender] < money){
+            revert NotEnoughFunds(money, accounts[msg.sender]);
         }
+            accounts[msg.sender] -= money;
             payable(msg.sender).transfer(money);
-            accHolders[msg.sender] -= money;
         
     }
     
-    function acc() public view returns(address){
+    function currentAccount() public view returns(address){
         return msg.sender;
     }
-    function CheckBalance() public view returns(uint){
-        return accHolders[msg.sender];
+    function checkBalance() public view returns(uint){
+        return accounts[msg.sender];
     }
 }
