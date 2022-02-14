@@ -12,34 +12,56 @@ contract BlindAuction{
         uint deposit;
     }
     mapping(address => Bid[]) public bidders;
-
-    // constructor(uint endTime,address payable _bidOwner){
-    //     auctiontime = block.timestamp + endTime;
-    //     bidOwner = _bidOwner;
-    // }
-    constructor(){
-        auctiontime = block.timestamp + 120;
-        bidOwner = payable(msg.sender);
+    mapping(address => uint) pendingReturns;
+    constructor(uint endTime,address payable _bidOwner){
+        auctiontime = block.timestamp + endTime;
+        bidOwner = _bidOwner;
     }
-    function addBid(uint _amount,bool _fake,string memory _secret) payable public{
-        bytes32 hashedBid = keccak256(abi.encodePacked(_amount, _fake, _secret));
+    function addBid(bytes32 _hashedBid) payable public{
         bidders[msg.sender].push(Bid({
-            blindedBid:hashedBid,
+            blindedBid:_hashedBid,
             deposit:msg.value
         }));
     }
     function revealBids(uint[] calldata _amounts,bool[] calldata _fakes,string[] calldata _secrets) public{
         uint totalBids = bidders[msg.sender].length;
-        require(_amounts.length == totalBids);
-        require(_fakes.length == totalBids);
-        require(_secrets.length == totalBids);
+        require(_amounts.length == totalBids,"Enter Valid Bids");
+        require(_fakes.length == totalBids,"Enter Valid Bids");
+        require(_secrets.length == totalBids,"Enter Valid Bids");
         uint refundAmount;
         for(uint i=0;i<totalBids;i++){
-            if(bidders[msg.sender][i].blindedBid == keccak256(abi.encodePacked(_amounts[i], _fakes[i], _secrets[i])))
-            {
-                refundAmount += bidders[msg.sender][i].deposit;
+            Bid storage currentBid = bidders[msg.sender][i];
+            if(currentBid.blindedBid != keccak256(abi.encodePacked(_amounts[i], _fakes[i], _secrets[i]))){
+                continue;
+            }
+            refundAmount += currentBid.deposit;
+            if(!_fakes[i] && currentBid.deposit>=_amounts[i]){
+                if(checkforHighestBid(msg.sender,currentBid.deposit)){
+                    refundAmount -= _amounts[i];
+                }
             }
         }
         payable(msg.sender).transfer(refundAmount);
+    }
+    function checkforHighestBid(address _bidder, uint _currentBidAmount) private returns(bool){
+        if (_currentBidAmount <= highestBid) {
+            return false;
+        }
+        if (highestBidder != address(0)) {
+            pendingReturns[highestBidder] += highestBid;
+        }
+        highestBid = _currentBidAmount;
+        highestBidder = payable(_bidder);
+        return true;
+    }
+      function withdraw() external {
+        uint amount = pendingReturns[msg.sender];
+        if (amount > 0) {
+            pendingReturns[msg.sender] = 0;
+            payable(msg.sender).transfer(amount);
+        }
+    }
+    function gethHash(uint _value,bool _fake,string memory _secret) public pure returns(bytes32){
+        return keccak256(abi.encodePacked(_value, _fake, _secret));
     }
 }
