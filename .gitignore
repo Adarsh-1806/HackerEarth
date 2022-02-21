@@ -1,3 +1,5 @@
 Solidity/Truffle/node_modules
 Solidity/Truffle/client/node_modules
 Solidity/Hardhat/node_modules
+Solidity/Truffle/client/src/contracts
+React/my-app/node_modules

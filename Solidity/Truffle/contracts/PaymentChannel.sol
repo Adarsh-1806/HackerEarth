@@ -6,11 +6,11 @@ contract PaymentChannel{
     address payable public sender;
     address payable public receiver;
     uint public timeout;
-    // constructor(address payable _receiver,uint _timeout) payable{
-    //     sender = payable(msg.sender);
-    //     receiver = _receiver;
-    //     timeout = block.timestamp + _timeout;
-    // }
+    constructor(address payable _receiver,uint _timeout) payable{
+        sender = payable(msg.sender);
+        receiver = _receiver;
+        timeout = block.timestamp + _timeout;
+    }
     function claimPayment(uint _amount,bytes memory _signature) public{
         require(msg.sender == receiver,"You are not Authorized to claim Payment");
         require(validSign(_amount,_signature),"Your Signature is not Valid to claim Payment");
