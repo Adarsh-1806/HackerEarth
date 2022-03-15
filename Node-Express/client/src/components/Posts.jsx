@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 function Posts() {
   const navigate = useNavigate();
   const [state, setState] = useState({});
@@ -44,7 +43,7 @@ function Posts() {
           </thead>
           <tbody>
             {!state.posts ? (
-              <h4>No Data</h4>
+              <tr>No Data</tr>
             ) : (
               <>
                 {state.posts.map((post) => (
@@ -74,7 +73,14 @@ function Posts() {
         </table>
       </div>
       <div className="d-flex justify-content-center">
-        <button className="btn btn-primary btn-sm">Add Post</button>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={(e) => {
+            navigate("/addpost");
+          }}
+        >
+          Add Post
+        </button>
       </div>
     </>
   );

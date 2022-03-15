@@ -1,15 +1,14 @@
-import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
-function EditPost() {
-  const location = useLocation();
+import { useNavigate } from "react-router-dom";
+
+function AddPost() {
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
   const navigate = useNavigate();
-  const { data } = location.state;
-  const [title, setTitle] = useState(data.title);
-  const [content, setContent] = useState(data.content);
-  const handleUpdate = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const blog = { id: data.id, title: title, content: content };
-    fetch("http://localhost:9000/updatepost", {
+    const blog = { title: title, content: content };
+    fetch("http://localhost:9000/savepost", {
       method: "POST",
       headers: { "content-Type": "application/json" },
       body: JSON.stringify(blog),
@@ -28,8 +27,7 @@ function EditPost() {
     <>
       <h1 className="d-flex justify-content-center">New Post</h1>
       <div className="container">
-        <form onSubmit={handleUpdate}>
-          <input type="hidden" value={data.id} name="id" />
+        <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label for="formGroupExampleInput" className="form-label">
               Post Title
@@ -38,7 +36,7 @@ function EditPost() {
               type="text"
               className="form-control"
               name="title"
-              defaultValue={data.title}
+              placeholder="Title"
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -50,13 +48,13 @@ function EditPost() {
               type="text"
               className="form-control"
               name="content"
-              defaultValue={data.body}
+              placeholder="Details"
               onChange={(e) => setContent(e.target.value)}
             />
           </div>
           <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-primary btn-sm">
-              Update
+              Add
             </button>
           </div>
         </form>
@@ -64,4 +62,4 @@ function EditPost() {
     </>
   );
 }
-export default EditPost;
+export default AddPost;
