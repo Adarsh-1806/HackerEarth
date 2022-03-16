@@ -53,7 +53,7 @@ function Posts() {
                     <td>{post.body}</td>
                     <td>
                       <button
-                        className="btn btn-warning btn-sm"
+                        className="btn btn-warning btn-sm mx-1"
                         onClick={(id) => handleEdit(post)}
                       >
                         Edit
