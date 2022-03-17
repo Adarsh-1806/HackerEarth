@@ -1,8 +1,8 @@
 const express = require("express");
 const db = require("./connection");
 const path = require("path");
-var bodyParser = require("body-parser");
-var cors = require("cors");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
@@ -26,7 +26,6 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
-
 app.get("/deletepost/:id", (req, res) => {
   let id = req.params.id;
   let sql = `DELETE FROM post WHERE id=${id}`;
