@@ -32,7 +32,14 @@ function Navbar() {
               >
                 All Blog
               </button>
-              <button className="nav-link btn btn-light mx-1">Add Blog</button>
+              <button
+                className="nav-link btn btn-light mx-1"
+                onClick={() => {
+                  navigate("/addblog");
+                }}
+              >
+                Add Blog
+              </button>
               <button className="nav-link btn btn-light mx-1">About</button>
             </div>
           </div>

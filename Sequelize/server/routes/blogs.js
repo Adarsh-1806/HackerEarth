@@ -7,23 +7,24 @@ router.get("/", (req, res) => {
   Blog.findAll()
     .then((blog) => {
       console.log(blog);
-      res.send(200, { blogs: blog });
+      res.status(200).send({ blogs: blog });
     })
     .catch((err) => console.log(err));
 });
 router.post("/addblog", (req, res) => {
+  console.log(req.body);
   Blog.create({
     title: req.body.title,
     technology: req.body.technology,
     description: req.body.description,
   })
     .then((result) => {
-      console.log(result);
-      res.send(200);
+      return res.status(200).json({ msg: "Blog added..." });
     })
     .catch((err) => {
-      console.log(err);
-      res.send(422);
+      return res
+        .status(422)
+        .json({ err: "Error accoured in adding new Blog..." });
     });
 });
 

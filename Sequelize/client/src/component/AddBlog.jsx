@@ -7,17 +7,22 @@ function AddBlog() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = JSON.stringify(state);
+    console.log(data);
     fetch("http://localhost:9000/addblog", {
       method: "POST",
       headers: { "content-Type": "application/json" },
-      body: JSON.stringify(state),
-    }).then((data) => {
-      if (data.err) {
-        console.log(data.err);
-      } else {
-        navigate("/");
-      }
-    });
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.err) {
+          console.log(data.err);
+        } else {
+          console.log(data.msg);
+          navigate("/");
+        }
+      });
   };
   return (
     <>
@@ -58,7 +63,7 @@ function AddBlog() {
               className="form-control"
               id="exampleInputPassword1"
               onChange={(e) =>
-                setState({ ...state, discription: e.target.value })
+                setState({ ...state, description: e.target.value })
               }
             />
           </div>
