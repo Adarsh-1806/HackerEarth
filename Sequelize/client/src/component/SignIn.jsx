@@ -1,74 +1,82 @@
+import Navbar from "./Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
-
-function AddBlog() {
-  const [state, setState] = useState({});
+function SignIn() {
+  const [state, setState] = useState();
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    const data = JSON.stringify(state);
-    console.log(data);
-    fetch("http://localhost:9000/addblog", {
+    fetch("http://localhost:9000/signup", {
       method: "POST",
       headers: { "content-Type": "application/json" },
-      body: data,
+      body: JSON.stringify(state),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.err) {
+          alert(data.err.details[0].message);
           console.log(data.err);
         } else {
           console.log(data.msg);
           navigate("/");
         }
       });
-  };
+  }
   return (
     <>
       <Navbar />
       <div className="container d-flex justify-content-center border p-2 w-50">
         <form className="w-50 " onSubmit={handleSubmit}>
-          <div className="mb-3 d-flex justify-content-center">Blog Details</div>
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Title
-            </label>
+            <label className="form-label">FirstName</label>
             <input
               type="text"
               className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              onChange={(e) => setState({ ...state, title: e.target.value })}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Technology
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputPassword1"
               onChange={(e) =>
-                setState({ ...state, technology: e.target.value })
+                setState({ ...state, firstName: e.target.value })
               }
             />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Description
+              Surname
             </label>
-            <textarea
+            <input
               type="text"
               className="form-control"
-              id="exampleInputPassword1"
-              onChange={(e) =>
-                setState({ ...state, description: e.target.value })
-              }
+              onChange={(e) => setState({ ...state, surname: e.target.value })}
             />
           </div>
-
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              onChange={(e) => setState({ ...state, email: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              onChange={(e) => setState({ ...state, pass: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              ReEnter Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              onChange={(e) => setState({ ...state, confPass: e.target.value })}
+            />
+          </div>
           <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-primary">
               Submit
@@ -80,4 +88,4 @@ function AddBlog() {
   );
 }
 
-export default AddBlog;
+export default SignIn;

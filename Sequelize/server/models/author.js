@@ -11,7 +11,7 @@ const Author = sequelize.define("author", {
   firstName: {
     type: Sequelize.STRING,
   },
-  serName: {
+  surname: {
     type: Sequelize.STRING,
   },
   email: {

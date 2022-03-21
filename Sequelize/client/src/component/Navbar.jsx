@@ -40,7 +40,14 @@ function Navbar() {
               >
                 Add Blog
               </button>
-              <button className="nav-link btn btn-light mx-1">About</button>
+              <button
+                className="nav-link btn btn-light mx-1"
+                onClick={() => {
+                  navigate("/signin");
+                }}
+              >
+                Sign up
+              </button>
             </div>
           </div>
         </div>
